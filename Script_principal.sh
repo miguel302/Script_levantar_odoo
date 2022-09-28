@@ -9,20 +9,33 @@ sudo apt-get install git -y npm python3-dev postgresql
 sudo apt-get install python3-venv -y
 
 #Creando un enlace simbolico de nodejs a node:
-sudo ln -s /usr/bin/nodejs /usr/bin/node
-	#09-2022 ERRORln: failed to create symbolic link '/usr/bin/node': File exists
+sudo ln -s /usr/bin/nodejs /usr/bin/node  #INCIDENCIA YA EXISTE ln: failed to create symbolic link '/usr/bin/node': File exists
+	
 
 #Instalando el compilador de less
 sudo npm install -g less@3.0.4 less-plugin-clean-css
               #NO ME DA ERROR ??? -->[DEPRECATED] FUNCIONA PERO ME DA ERRORES EN UBUNTU (Probado solo en v11)
+              #DICE QUE: la solicitud ha quedado obsoleta
 
 sudo npm install -g less less-plugin-clean-css
+
+# hasta ahora tenemos root (desde donde estamos)    y  
+#         postgres:x:113:118:PostgreSQL administrator,,,:/var/lib/postgresql:/bin/bash
+#         que se instalo cd instalamos postgre 
+#       TIP para ver los usuarios creados       cat /etc/passwd
+
 #[SEGUNDA PARTE] Creacion de usuario del sistema operativo y en PostgreSQL
 #Agregar un nuevo usuario y estableciendo su clave:
 sudo adduser --system --home=/opt/odoo --group odoo
-sudo passwd odoo
-#Crear usuario de la BBDD en postgresql:
+sudo passwd odoo     # ES NESARIO PONER CONTRASEÑA ?????
+# OJO ME ESTE USUARIO            odoo:x:114:119::/opt/odoo:/usr/sbin/nologin
+# OJO   nologin ??? por pone esto creo recordar que despues me daba error este error "This Account is currently not available"
+''' SOLUCION (si es q esto es un problema)
+           ejecutamos    sudo chsh -s /bin/bash odoo   
+           y asi es como se queda la cosa       odoo:x:114:119::/opt/odoo:/bin/bash'''
+sudo chsh -s /bin/bash odoo
 
+#Crear usuario de la BBDD en postgresql:
 #----------------------------POSTGRES------------------------------------------
 
 #Crear usuario de la BBDD en postgresql:
@@ -34,8 +47,6 @@ createuser --createdb --username postgres --no-createrole --no-superuser --pwpro
 # 09-2022 ------------- ROOT  ----------AUNQUE NO PONE LOS COMANDO SUPONGO Q SE VA DE POSTGRES A ODOO-------------
 #[TERCERA PARTE] Descargando, configurando e instalando odoo
 #Establecer python3 por defecto en el sistema operativo:
-
-
 
           # Actualizamos las Alternativas de Python
           #       OOOOOOOOOOOJOOOOOOOOOOOOOOOOOOOO NO LO EJECUTA
