@@ -1,5 +1,5 @@
 
-#------------------------------ROOT------------------------------------
+#---------------lo q me ha costao---------------ROOT------------------------------------
 sudo apt-get update -y && sudo apt-get upgrade -y # No lo pone angel, pero al intalar postgres me dio error E: Unable to locate package postgresql
 
 # AXEL Instalar git, npm, postgresql, python3-dev:
