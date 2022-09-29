@@ -27,7 +27,7 @@ sudo npm install -g less less-plugin-clean-css
 #[SEGUNDA PARTE] Creacion de usuario del sistema operativo y en PostgreSQL
 #Agregar un nuevo usuario y estableciendo su clave:
 sudo adduser --system --home=/opt/odoo --group odoo
-sudo passwd odoo     # ES NESARIO PONER CONTRASEÑA ?????
+sudo passwd odoo     # ES NECESARIO PONER CONTRASEÑA ?????
 # OJO ME ESTE USUARIO            odoo:x:114:119::/opt/odoo:/usr/sbin/nologin
 # OJO   nologin ??? por pone esto creo recordar que despues me daba error este error "This Account is currently not available"
 ''' SOLUCION (si es q esto es un problema)
@@ -44,24 +44,38 @@ createuser --createdb --username postgres --no-createrole --no-superuser --pwpro
 #Ingresar clave (recomiendo utilizar la misma que el nombre "odoo")
 
 
-# 09-2022 ------------- ROOT  ----------AUNQUE NO PONE LOS COMANDO SUPONGO Q SE VA DE POSTGRES A ODOO-------------
+# 09-2022 ------------- ROOT  ----------------------
 #[TERCERA PARTE] Descargando, configurando e instalando odoo
 #Establecer python3 por defecto en el sistema operativo:
 
           # Actualizamos las Alternativas de Python
           #       OOOOOOOOOOOJOOOOOOOOOOOOOOOOOOOO NO LO EJECUTA
-       sudo update-alternatives --install /usr/bin/python python /usr/bin/python3.8.10 # (O        la      version que este en ese momento intalada)
-          # ME PIDE CONTRASEL
+       sudo update-alternatives --install /usr/bin/python python /usr/bin/python3.8.10 # (O la version que este en ese momento intalada)
+          # ME PIDE CONTRASEÑA
+          # ME DICE Q NEED creo q priority?? --> update-alternatives: --install needs <link> <name> <path> <priority>
+          # PONGO EN PTES
+
         sudo update-alternatives --config python
           #       OOOOOOOOOOJOOOOOOOOOOOOO   ERRRROOOR  update-alternatives: error: no alternatives for python
 
 
 #Ingresar con el usuario creado:
-sudo su - odoo -s /bin/bash    # OJOOOO con su odoo no me dejara por la schell la crea como /bin/bash/nologin   verlo en cat/etc??????
+sudo su - odoo -s /bin/bash    # YA NO TENEMOS ESTE PROBLEMA PQ AL USUARIo ODOO PUSIMO LA SHELL BIN/BASH # OLD PROBLEM OJOOOO con su odoo no me dejara por la schell la crea como /bin/bash/nologin   verlo en cat/etc??????
 
+
+#----------------------------ODOO------------------------------------------
 
 mkdir V14  # RECODAR Q ESTAMOS EN /HOME/OPT
 cd V14
+
+#Descargar el codigo fuente en la HOME de odoo o transferirlos a la ruta del servidor
+#En este caso [/opt/odoo]:
+
+git clone https://github.com/odoo/odoo --depth 1 --branch 14.0 --single-branch
+
+
+
+
 
 #Crear un entorno virtual de python para odoo:
 #En el directorio Home de odoo [/opt/odoo/]:
@@ -72,11 +86,7 @@ python3 -m venv virt
 #Activar el entorno (deactivate para desactivar)
 source virt/bin/activate
 
-#Descargar el codigo fuente en la HOME de odoo o transferirlos a la ruta del servidor
-#En este caso [/opt/odoo]:
-
-git clone https://github.com/odoo/odoo --depth 1 --branch 14.0 --single-branch
-
+#---------------------------VIRTUAL----------------------------------------
 
 python3 setup.py install 
 #(En caso de error de dependencia, instalar manaulmente las faltan y ejecutar nuevamente, o llamar python desde la ruta del entorno virtual EJ: ../virt/bin/python setup.py install)
@@ -203,8 +213,4 @@ tail -f /var/log/odoo/odoo.log
 
 
 
-#----------------------------ODOO------------------------------------------
 
-
-
-#---------------------------VIRTUAL----------------------------------------
